@@ -6,8 +6,7 @@ import { Ingredient } from './../shared/ingredient.model';
 
 @Component({
     selector: 'app-shopping-list',
-    templateUrl: './shopping-list.component.html',
-    styleUrls: ['./shopping-list.component.css']
+    templateUrl: './shopping-list.component.html'
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
@@ -26,5 +25,9 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
+    }
+
+    onEditItem(index: number): void {
+        this.shoppingListService.startEditing.next(index);
     }
 }
