@@ -35,4 +35,14 @@ export class ShoppingListService {
     getIngredient(index: number): Ingredient {
         return this._ingredients[index];
     }
+
+    updateIngredient(index: number, newIngredient: Ingredient): void {
+        this._ingredients[index] = newIngredient;
+        this._ingredientsChanged.next(this.ingredients);
+    }
+
+    removeIngredient(index: number): void {
+        this._ingredients.splice(index, 1);
+        this._ingredientsChanged.next(this.ingredients);
+    }
 }
