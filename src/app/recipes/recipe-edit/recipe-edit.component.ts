@@ -54,6 +54,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.navigateAwayToRecipes();
     }
 
+    onCancel(): void {
+        this.navigateAwayToRecipes();
+    }
+
     onAddIngredient(): void {
         (<FormArray>this.recipeForm.get('ingredients')).push(
             new FormGroup({
@@ -63,8 +67,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         );
     }
 
-    onCancel(): void {
-        this.navigateAwayToRecipes();
+    onRemoveIngredient(index: number): void {
+        (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
     }
 
     private initForm(): void {
