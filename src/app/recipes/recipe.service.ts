@@ -1,13 +1,18 @@
-import { ShoppingListService } from './../shopping-list/shopping-list.service';
 import { Injectable } from '@angular/core';
+import { Response } from '@angular/http';
 
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { Recipe } from './recipe.model';
 import { Ingredient } from './../shared/ingredient.model';
+import { DataStorageService } from './../shared/data-storage.service';
+import { ShoppingListService } from './../shopping-list/shopping-list.service';
 
 @Injectable()
 export class RecipeService {
+    private static RECIPE_URL: string = 'https://recipebook-925c1.firebaseio.com/recipes.json';
+
     private _recipesChanged: Subject<Array<Recipe>> = new Subject<Array<Recipe>>();
     private _recipes: Array<Recipe> = [
         new Recipe(
@@ -30,7 +35,7 @@ export class RecipeService {
         )
     ];
 
-    constructor(private shoppingListService: ShoppingListService) {}
+    constructor(private shoppingListService: ShoppingListService, private dataStorageService: DataStorageService) {}
     
     getRecipeById(id: number): Recipe {
         return this._recipes[id];
@@ -60,6 +65,24 @@ export class RecipeService {
 
     removeRecipe(index: number): void {
         this._recipes.splice(index, 1);
+        this._recipesChanged.next(this.recipes);
+    }
+
+    storeRecipes(): Observable<Response> {
+        return this.dataStorageService.store(RecipeService.RECIPE_URL, this.recipes);
+    }
+
+    getAllRecipes(): void {
+        this.dataStorageService.fetch(RecipeService.RECIPE_URL)
+            .subscribe(
+                this.setRecipes.bind(this),
+                console.error
+            );
+    }
+
+    private setRecipes(recipes: Array<any>) {
+        this._recipes = recipes
+            .map(obj => new Recipe(obj._name, obj._description, obj._imagePath, obj._ingredients));
         this._recipesChanged.next(this.recipes);
     }
 }
