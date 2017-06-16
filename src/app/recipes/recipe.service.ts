@@ -49,8 +49,8 @@ export class RecipeService {
         return this._recipesChanged;
     }
 
-    addIngredientsToShoppingList(ingrediets: Array<Ingredient>): void {
-        this.shoppingListService.addIngredients(ingrediets);
+    addIngredientsToShoppingList(ingredients: Array<Ingredient>): void {
+        this.shoppingListService.addIngredients(ingredients);
     }
 
     addRecipe(recipe: Recipe): void {
@@ -81,7 +81,12 @@ export class RecipeService {
     }
 
     private setRecipes(recipes: Array<any>) {
-        this._recipes = recipes
+       this._recipes = recipes
+            .map(obj => {
+                obj._ingredients = (obj._ingredients || [])
+                    .map(ingredient => new Ingredient(ingredient._name, ingredient._amount));
+                return obj;
+            })
             .map(obj => new Recipe(obj._name, obj._description, obj._imagePath, obj._ingredients));
         this._recipesChanged.next(this.recipes);
     }

@@ -38,11 +38,14 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(): void {
+        const ingredients = (this.recipeForm.value['ingredients'] || [])
+            .map(obj => new Ingredient(obj.name, obj.amount));
+
         const recipe: Recipe = new Recipe(
             this.recipeForm.value['name'],
             this.recipeForm.value['description'],
             this.recipeForm.value['imagePath'],
-            this.recipeForm.value['ingredients']
+            ingredients
         );
 
         if(this.editMode) {
