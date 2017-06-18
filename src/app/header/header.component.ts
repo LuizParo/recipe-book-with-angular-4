@@ -1,7 +1,9 @@
-import { Recipe } from './../recipes/recipe.model';
 import { Component } from '@angular/core';
 import { Response } from '@angular/http';
 
+import { Recipe } from './../recipes/recipe.model';
+
+import { AuthService } from './../auth/auth.service';
 import { RecipeService } from './../recipes/recipe.service';
 
 @Component({
@@ -11,7 +13,7 @@ import { RecipeService } from './../recipes/recipe.service';
 })
 export class HeaderCompoment {
 
-    constructor(private recipeService: RecipeService) {}
+    constructor(private recipeService: RecipeService, private authService: AuthService) {}
 
     onSaveData(): void {
         this.recipeService.storeRecipes()
@@ -20,5 +22,9 @@ export class HeaderCompoment {
 
     onFetchData(): void {
         this.recipeService.getAllRecipes();
+    }
+
+    onLogout(): void {
+        this.authService.logout();
     }
 }

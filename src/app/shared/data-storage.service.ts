@@ -3,17 +3,21 @@ import { Http, Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 
+import { AuthService } from './../auth/auth.service';
+
 @Injectable()
 export class DataStorageService {
 
-    constructor(private http: Http){}
+    constructor(private http: Http, private authService: AuthService) {}
 
     store(url: string, data: any): Observable<Response> {
-        return this.http.put(url, data);
+        const token = this.authService.token;
+        return this.http.put(`${url}?auth=${token}`, data);
     }
 
     fetch(url: string): Observable<any> {
-        return this.http.get(url)
+        const token = this.authService.token;
+        return this.http.get(`${url}?auth=${token}`)
             .map((response: Response) => response.json());
     }
 }
