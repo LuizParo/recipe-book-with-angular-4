@@ -10,6 +10,8 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 
+import { AuthGuard } from './auth/auth-guard.service';
+
 const appRoutes: Routes = [{
     path : '',
     redirectTo : '/recipes',
@@ -22,13 +24,15 @@ const appRoutes: Routes = [{
         component : RecipeStartComponent
     }, {
         path : 'new',
-        component : RecipeEditComponent
+        component : RecipeEditComponent,
+        canActivate : [AuthGuard]
     }, {
         path : ':id',
         component : RecipeDetailComponent
     }, {
         path : ':id/form',
-        component : RecipeEditComponent
+        component : RecipeEditComponent,
+        canActivate : [AuthGuard]
     }]
 }, {
     path : 'shopping-list',
