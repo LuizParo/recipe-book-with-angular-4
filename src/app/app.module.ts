@@ -5,11 +5,12 @@ import { HttpModule } from '@angular/http';
 import 'rxjs/Rx';
 
 import { AppRoutingModule } from './app-routing.module';
-import { RecipeModule } from './recipes/recipe.module';
+import { AuthModule } from './auth/auth.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 import { AppComponent } from './app.component';
 import { HeaderCompoment } from './header/header.component';
+import { HomeComponent } from './home/home.component';
 
 import { AuthGuard } from './auth/auth-guard.service';
 import { AuthService } from './auth/auth.service';
@@ -18,21 +19,17 @@ import { RecipeService } from './recipes/recipe.service';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { SharedModule } from './shared/shared.module';
 
-import { SigninComponent } from './auth/signin/signin.component';
-import { SignupComponent } from './auth/signup/signup.component';
-
 @NgModule({
     declarations: [
         AppComponent,
         HeaderCompoment,
-        SigninComponent,
-        SignupComponent
+        HomeComponent
     ],
     imports: [
         AppRoutingModule,
+        AuthModule,
         BrowserModule,
         HttpModule,
-        RecipeModule,
         SharedModule,
         ShoppingListModule
     ],
