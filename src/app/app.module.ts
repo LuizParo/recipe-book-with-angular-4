@@ -4,41 +4,26 @@ import { HttpModule } from '@angular/http';
 
 import 'rxjs/Rx';
 
+import { AppComponent } from './app.component';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
-
-import { AppComponent } from './app.component';
-import { HeaderCompoment } from './header/header.component';
-import { HomeComponent } from './home/home.component';
-
-import { AuthGuard } from './auth/auth-guard.service';
-import { AuthService } from './auth/auth.service';
-import { DataStorageService } from './shared/data-storage.service';
-import { RecipeService } from './recipes/recipe.service';
-import { ShoppingListService } from './shopping-list/shopping-list.service';
+import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        HeaderCompoment,
-        HomeComponent
+        AppComponent
     ],
     imports: [
         AppRoutingModule,
         AuthModule,
+        CoreModule,
         BrowserModule,
         HttpModule,
         SharedModule,
         ShoppingListModule
-    ],
-    providers: [
-        AuthGuard,
-        AuthService,
-        DataStorageService,
-        RecipeService,
-        ShoppingListService
     ],
     bootstrap: [AppComponent]
 })
